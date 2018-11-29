@@ -1,1 +1,1 @@
-# Trainer-schedule project
+# Trainer-planner project
