@@ -1,0 +1,11 @@
+.form{
+    padding: 20px;
+}
+
+.form__item{
+    margin-bottom: 10px;
+}
+
+.form__item--error{
+    color: red;
+}
