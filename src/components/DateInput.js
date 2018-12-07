@@ -1,11 +1,14 @@
 import React from 'react';
-import '../style/Input.css';
+import '../style/DateInput.css';
 
 
-class Input extends React.Component{
+class DateInput extends React.Component{
     constructor(props){
         super(props);
-        this.state = { value: "", name: this.props.name };
+        this.state = { value: "", 
+                       // name: this.props.name,
+                        //class: this.props.classInput
+                     };
 
         this.handleChange = this.handleChange.bind(this);
         
@@ -18,15 +21,16 @@ class Input extends React.Component{
     render() {
         return(
             <label className="form__lable">
-                <span className="form__text">{this.state.name}</span>
+                <span className="form__text">{this.props.name}</span>
                 <input
                     type="date"
                     value={this.props.date}
                     onChange={this.handleChange}
+                    className={this.props.class}
                 />
             </label>
         )
     }
 }
 
-export default Input;
+export default DateInput;
