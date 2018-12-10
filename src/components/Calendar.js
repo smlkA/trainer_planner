@@ -1,11 +1,13 @@
 import React from 'react';
-import Month from './Month';
+// import Month from './Month';
 // import '../style/Calendar.css';
 
-function Calendar(){
+function Calendar(props){
     return(
         <div className="calendar">
-            <Month />
+            { 
+            
+            }
         </div>
     )
 }

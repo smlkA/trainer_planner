@@ -1,7 +1,7 @@
 import React from 'react';
 import DateInput from './DateInput';
 import Submit from './Submit';
-// import Calendar from './Calendar';
+import Month from './Month';
 import '../style/Form.css';
 
 class Form extends React.Component{
@@ -38,14 +38,13 @@ class Form extends React.Component{
         if(dateEnd < dateStart || dateStart.getMonth() === dateEnd.getMonth()){
             dateNew.setMonth(monthStart + 1);
 
-            this.setState({dateEnd: dateNew.getFullYear() + 
-                            '-' + dateNew.toLocaleString("en-US", {month:"2-digit"}) + 
-                            '-' + dateNew.toLocaleString("en-US", {day:"2-digit"})});
-        } else if (dateNew.setMonth(monthStart + 4) < dateEnd){
-            this.setState({dateEnd: dateNew.getFullYear() + 
-                            '-' + dateNew.toLocaleString("en-US", {month:"2-digit"}) + 
-                            '-' + dateNew.toLocaleString("en-US", {day:"2-digit"})});
+            this.setState({dateEnd: dateNew.toISOString().slice(0, 10)});
         }
+        if (dateNew.setMonth(monthStart + 3) < dateEnd){
+            this.setState({dateEnd: dateNew.toISOString().slice(0, 10)});
+        }
+
+        
     }
 
     getLastDayOfMonth(year, month){
@@ -56,7 +55,6 @@ class Form extends React.Component{
     dateRange(start, end){
         var startDate = new Date(start);
         var endDate = new Date(end);
-        var year = startDate.getFullYear();
         var months = {};
         var monthEnd = endDate.getMonth();
 
@@ -65,29 +63,19 @@ class Form extends React.Component{
         }
 
         for(var i = startDate.getMonth(); i <= monthEnd; i++){
-            var date = new Date(year, i, 1);
+            var date = new Date();
+            date.setMonth(i);
             var nameMonth = date.toLocaleString('en-US', {month: 'long'});
+    
             months[nameMonth] = [];
-
-            for(var j = 1; j <= this.getLastDayOfMonth(year, i); j++){
-
+    
+            for(var j = 1; j <= this.getLastDayOfMonth(date.getFullYear(), i); j++){
                 var obj = {};
+    
                 date.setDate(j);
-                var day = date.getDate(); 
-
-                if(date.getDate() < 10){
-                    day = '0' + day;
-                }
-
-                var month = date.getMonth() + 1;
-
-                if(month < 10){
-                    month = '0' + month;
-                }
-                
-                obj['date'] = day + '-' + month + '-' + date.getFullYear();
+    
+                obj['date'] = date.toISOString().slice(0, 10);
                 obj['weekday'] = date.getDay();
-                
                 months[nameMonth].push(obj);
             }
         }
@@ -111,21 +99,32 @@ class Form extends React.Component{
     }
 
     render(){
+        const listMonth = [];
+
+            for(var key in this.state.calendar){
+                listMonth.push(<Month days={this.state.calendar[key]} name={key} key={key}/>);
+            }
+
         return(
-            <form action='' className='form' onSubmit={this.handleSubmit}>
-                <DateInput 
-                    name='Start' 
-                    onDateChange={this.handleChangeStart}
-                    date={this.state.dateStart}
-                    class={this.validateEmpty(this.state.dateStart)} />
-                <DateInput 
-                    name='End' 
-                    onDateChange={this.handleChangeEnd}
-                    date={this.state.dateEnd}
-                    class={this.validateEmpty(this.state.dateEnd)}/>
-                <Submit value='Show'/>
-            </form>
-        );
+            <div>
+                <form action='' className='form' onSubmit={this.handleSubmit}>
+                    <DateInput 
+                        name='Start' 
+                        onDateChange={this.handleChangeStart}
+                        date={this.state.dateStart}
+                        class={this.validateEmpty(this.state.dateStart)} />
+                    <DateInput 
+                        name='End' 
+                        onDateChange={this.handleChangeEnd}
+                        date={this.state.dateEnd}
+                        class={this.validateEmpty(this.state.dateEnd)}/>
+                    <Submit value='Show'/>
+                </form>
+                <div className='calendar'>
+                    {listMonth}
+                </div>
+            </div>
+        ); 
     }
 }
 

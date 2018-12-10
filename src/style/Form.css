@@ -9,3 +9,7 @@
 .form__item--error{
     color: red;
 }
+
+.calendar{
+    display: flex;
+}
