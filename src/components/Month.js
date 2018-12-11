@@ -5,15 +5,28 @@ import '../style/Month.css';
 function Month(props){
 
     const listDay = props.days.map(function(item, i){
-        // var date = new Date(item.date);
+        let className='day';
+
+        if(i === 0){
+            className+=' weekday-' + item.weekday;
+        }
+
+        if(item.weekend){
+            className+=' weekend'
+        }
+
+        if(item.active){  //TODO
+            className+=' inactive'
+        }
+        
         return(
-            <Day day={item} key={i}/>
-        ) 
+            <Day day={item} key={i} className={className}/>
+        )
     });
 
     return(
-        <div className='calendar__month'>
-            <h1>{props.name}</h1>
+        <div className='month'>
+            <h1 className='month__header'>{props.name}</h1>
             <div className='nameWeekDay'>
                 <div className='weekday'>Sun</div>
                 <div className='weekday'>Mon</div>
@@ -23,8 +36,9 @@ function Month(props){
                 <div className='weekday'>Fri</div>
                 <div className='weekday'>Sat</div>
             </div>
-
-            {listDay}
+            <div className='month__days'>
+                {listDay}
+            </div>
         </div>
     )
 }

@@ -2,9 +2,9 @@ import React from 'react';
 import '../style/Day.css';
 
 function Day(props){
-    var date = new Date(props.day.date);
+    let date = new Date(props.day.date);
     return(
-        <div className={'day weekday-' + props.day.weekday}>
+        <div className={props.className}>
             {date.getDate()}
         </div>
     )

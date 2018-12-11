@@ -1,30 +1,34 @@
 function getLastDayOfMonth(year, month){
-    var date = new Date(year, month + 1, 0);
+    let date = new Date(year, month + 1, 0);
     return date.getDate();
 }
 
 function dateRange(start, end){
-    var startDate = new Date(start);
-    var endDate = new Date(end);
-    var year = startDate.getFullYear();
-    var months = {};
-    for(var i = startDate.getMonth(); i <= endDate.getMonth(); i++){
-        var date = new Date(year, i, 1);
-        var nameMonth = date.toLocaleString('en-US', {month: 'long'});
+    let startDate = new Date(start);
+    let endDate = new Date(end);
+    let months = {};
+    let monthEnd = endDate.getMonth();
+
+    if(monthEnd < startDate.getMonth()){
+        monthEnd += 12;
+    }
+
+    for(let i = startDate.getMonth(); i <= monthEnd; i++){
+        let date = new Date(start);
+        date.setMonth(i);
+        let nameMonth = date.toLocaleString('en-US', {month: 'long'});
+
         months[nameMonth] = [];
-        for(var j = 1; j <= getLastDayOfMonth(year, i); j++){
-            var obj = {};
+
+        for(let j = 1; j <= getLastDayOfMonth(date.getFullYear(), date.getMonth()); j++){
+            let obj = {};
+
             date.setDate(j);
-            var day = date.getDate(); 
-            if(date.getDate() < 10){
-                day = '0' + day;
-            }
-            var month = date.getMonth() + 1;
-            if(month < 10){
-                month = '0' + month;
-            }
-            obj['date'] = day + '-' + month + '-' + date.getFullYear();
+
+            obj['date'] = date.toISOString().slice(0, 10);
             obj['weekday'] = date.getDay();
+            obj['weekend'] = (date.getDay() === 0 || date.getDay() === 6) ? true : false;
+            obj['active'] = (date >= startDate && date <= endDate) ? true : false;
             months[nameMonth].push(obj);
         }
     }

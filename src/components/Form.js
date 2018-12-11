@@ -17,7 +17,7 @@ class Form extends React.Component{
         this.handleChangeEnd = this.handleChangeEnd.bind(this);
         this.dateAutoFill = this.dateAutoFill.bind(this);
         this.validateEmpty = this.validateEmpty.bind(this);
-        this.dateRange = this.dateRange.bind(this);
+        this.getDateRange = this.getDateRange.bind(this);
         this.getLastDayOfMonth = this.getLastDayOfMonth.bind(this);
     }
 
@@ -32,15 +32,12 @@ class Form extends React.Component{
     dateAutoFill(){
         const dateStart = new Date(this.state.dateStart);
         const dateEnd = new Date(this.state.dateEnd);
-        const monthStart = dateStart.getMonth();
-        const dateNew = new Date(dateStart);
+        const dateNew = new Date(this.state.dateStart);
+        dateNew.setMonth(dateStart.getMonth() + 1);
 
-        if(dateEnd < dateStart || dateStart.getMonth() === dateEnd.getMonth()){
-            dateNew.setMonth(monthStart + 1);
-
+        if(dateEnd < dateStart || dateNew > dateEnd){
             this.setState({dateEnd: dateNew.toISOString().slice(0, 10)});
-        }
-        if (dateNew.setMonth(monthStart + 3) < dateEnd){
+        } else if (dateNew.setMonth(dateNew.getMonth() + 2) < dateEnd){
             this.setState({dateEnd: dateNew.toISOString().slice(0, 10)});
         }
 
@@ -48,34 +45,36 @@ class Form extends React.Component{
     }
 
     getLastDayOfMonth(year, month){
-        var date = new Date(year, month + 1, 0);
+        let date = new Date(year, month + 1, 0);
         return date.getDate();
     }
 
-    dateRange(start, end){
-        var startDate = new Date(start);
-        var endDate = new Date(end);
-        var months = {};
-        var monthEnd = endDate.getMonth();
-
+    getDateRange = (start, end) => {
+        let startDate = new Date(start);
+        let endDate = new Date(end);
+        let months = {};
+        let monthEnd = endDate.getMonth();
+    
         if(monthEnd < startDate.getMonth()){
             monthEnd += 12;
         }
-
-        for(var i = startDate.getMonth(); i <= monthEnd; i++){
-            var date = new Date();
+    
+        for(let i = startDate.getMonth(); i <= monthEnd; i++){
+            let date = new Date(start);
             date.setMonth(i);
-            var nameMonth = date.toLocaleString('en-US', {month: 'long'});
+            let nameMonth = date.toLocaleString('en-US', {month: 'long'});
     
             months[nameMonth] = [];
     
-            for(var j = 1; j <= this.getLastDayOfMonth(date.getFullYear(), i); j++){
-                var obj = {};
+            for(let j = 1; j <= this.getLastDayOfMonth(date.getFullYear(), date.getMonth()); j++){
+                let obj = {};
     
                 date.setDate(j);
     
                 obj['date'] = date.toISOString().slice(0, 10);
                 obj['weekday'] = date.getDay();
+                obj['weekend'] = (date.getDay() === 0 || date.getDay() === 6) ? true : false;
+                obj['inactive'] = (date >= startDate && date <= endDate) ? true : false;
                 months[nameMonth].push(obj);
             }
         }
@@ -85,7 +84,9 @@ class Form extends React.Component{
     handleSubmit(event){
         this.dateAutoFill();
         
-        this.setState({calendar: this.dateRange(this.state.dateStart, this.state.dateEnd)});
+        this.setState(prevState =>
+            ({calendar: this.getDateRange(prevState.dateStart, prevState.dateEnd)})
+        );
         
         event.preventDefault();
     }
@@ -101,9 +102,9 @@ class Form extends React.Component{
     render(){
         const listMonth = [];
 
-            for(var key in this.state.calendar){
-                listMonth.push(<Month days={this.state.calendar[key]} name={key} key={key}/>);
-            }
+        for(let key in this.state.calendar){
+            listMonth.push(<Month days={this.state.calendar[key]} name={key} key={key}/>);
+        }
 
         return(
             <div>
