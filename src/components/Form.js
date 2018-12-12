@@ -1,16 +1,14 @@
 import React from 'react';
 import DateInput from './DateInput';
 import Submit from './Submit';
-import Month from './Month';
+// import Month from './Month';
 import '../style/Form.css';
 
 class Form extends React.Component{
     constructor(props) {
         super(props);
 
-        this.state = { dateStart: '',
-                        dateEnd: '',
-                        calendar: ''};
+        this.state = { dateStart: '' };
     }
 
     validateEmpty = (value) => {
@@ -80,10 +78,12 @@ class Form extends React.Component{
     handleSubmit = (event) => {
         this.dateAutoFill();
         
-        this.setState(prevState =>
-            ({calendar: this.getDateRange(prevState.dateStart, prevState.dateEnd)})
-        );
+        // this.setState(prevState =>
+        //     ({calendar: this.getDateRange(prevState.dateStart, prevState.dateEnd)})
+        // );
         
+        this.props.updateData(this.state.dateStart, this.state.dateEnd);
+
         event.preventDefault();
     }
 
@@ -96,31 +96,20 @@ class Form extends React.Component{
     }
 
     render(){
-        const listMonth = [];
-
-        for(let key in this.state.calendar){
-            listMonth.push(<Month days={this.state.calendar[key]} name={key} key={key}/>);
-        }
-
         return(
-            <div>
-                <form action='' className='form' onSubmit={this.handleSubmit}>
-                    <DateInput 
-                        name='Start' 
-                        onDateChange={this.handleChangeStart}
-                        date={this.state.dateStart}
-                        class={this.validateEmpty(this.state.dateStart)} />
-                    <DateInput 
-                        name='End' 
-                        onDateChange={this.handleChangeEnd}
-                        date={this.state.dateEnd}
-                        class={this.validateEmpty(this.state.dateEnd)}/>
-                    <Submit value='Show'/>
-                </form>
-                <div className='calendar'>
-                    {listMonth}
-                </div>
-            </div>
+            <form action='' className='form' onSubmit={this.handleSubmit}>
+                <DateInput 
+                    name='Start' 
+                    onDateChange={this.handleChangeStart}
+                    date={this.state.dateStart}
+                    class={this.validateEmpty(this.state.dateStart)} />
+                <DateInput 
+                    name='End' 
+                    onDateChange={this.handleChangeEnd}
+                    date={this.state.dateEnd}
+                    class={this.validateEmpty(this.state.dateEnd)}/>
+                <Submit value='Show'/>
+            </form>
         ); 
     }
 }

@@ -5,10 +5,7 @@ import '../style/DateInput.css';
 class DateInput extends React.Component{
     constructor(props){
         super(props);
-        this.state = { value: "", 
-                       // name: this.props.name,
-                        //class: this.props.classInput
-                     };
+        this.state = { value: ""};
 
         this.handleChange = this.handleChange.bind(this);
         
