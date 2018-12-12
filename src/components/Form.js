@@ -11,17 +11,9 @@ class Form extends React.Component{
         this.state = { dateStart: '',
                         dateEnd: '',
                         calendar: ''};
-
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChangeStart = this.handleChangeStart.bind(this);
-        this.handleChangeEnd = this.handleChangeEnd.bind(this);
-        this.dateAutoFill = this.dateAutoFill.bind(this);
-        this.validateEmpty = this.validateEmpty.bind(this);
-        this.getDateRange = this.getDateRange.bind(this);
-        this.getLastDayOfMonth = this.getLastDayOfMonth.bind(this);
     }
 
-    validateEmpty(value){
+    validateEmpty = (value) => {
         if(!value){
             return 'empty';
         }
@@ -29,22 +21,26 @@ class Form extends React.Component{
         return;
     }
 
-    dateAutoFill(){
+    dateAutoFill = () => {
         const dateStart = new Date(this.state.dateStart);
         const dateEnd = new Date(this.state.dateEnd);
         const dateNew = new Date(this.state.dateStart);
         dateNew.setMonth(dateStart.getMonth() + 1);
 
-        if(dateEnd < dateStart || dateNew > dateEnd){
-            this.setState({dateEnd: dateNew.toISOString().slice(0, 10)});
-        } else if (dateNew.setMonth(dateNew.getMonth() + 2) < dateEnd){
-            this.setState({dateEnd: dateNew.toISOString().slice(0, 10)});
-        }
+        let date = dateEnd.toISOString().slice(0, 10);
 
+        if (dateEnd < dateStart || dateNew > dateEnd) {
+            date = dateNew.toISOString().slice(0, 10);
+        }  
+        if (dateNew.setMonth(dateNew.getMonth() + 2) < dateEnd){
+            date = dateNew.toISOString().slice(0, 10);
+        } 
+
+        this.setState({dateEnd: date});
         
     }
 
-    getLastDayOfMonth(year, month){
+    getLastDayOfMonth = (year, month) => {
         let date = new Date(year, month + 1, 0);
         return date.getDate();
     }
@@ -74,14 +70,14 @@ class Form extends React.Component{
                 obj['date'] = date.toISOString().slice(0, 10);
                 obj['weekday'] = date.getDay();
                 obj['weekend'] = (date.getDay() === 0 || date.getDay() === 6) ? true : false;
-                obj['inactive'] = (date >= startDate && date <= endDate) ? true : false;
+                obj['inactive'] = (date >= startDate && date <= endDate) ? false : true;
                 months[nameMonth].push(obj);
             }
         }
         return months;
     }
 
-    handleSubmit(event){
+    handleSubmit = (event) => {
         this.dateAutoFill();
         
         this.setState(prevState =>
@@ -91,11 +87,11 @@ class Form extends React.Component{
         event.preventDefault();
     }
 
-    handleChangeStart(date){
+    handleChangeStart = (date) => {
         this.setState({dateStart: date});
     }
 
-    handleChangeEnd(date){
+    handleChangeEnd = (date) => {
         this.setState({dateEnd: date});
     }
 

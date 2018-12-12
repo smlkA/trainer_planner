@@ -28,7 +28,7 @@ function dateRange(start, end){
             obj['date'] = date.toISOString().slice(0, 10);
             obj['weekday'] = date.getDay();
             obj['weekend'] = (date.getDay() === 0 || date.getDay() === 6) ? true : false;
-            obj['active'] = (date >= startDate && date <= endDate) ? true : false;
+            obj['inactive'] = (date >= startDate && date <= endDate) ? false : true;
             months[nameMonth].push(obj);
         }
     }
