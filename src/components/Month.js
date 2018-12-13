@@ -21,8 +21,6 @@ function Month(props){
             )
         });
 
-    const numEmptyDays = (props.days[0].weekday === 0) ? 6 : props.days[0].weekday - 1;
-
     const listDays = props.days.map((item, i) => {
         let className='day';
 
@@ -46,7 +44,7 @@ function Month(props){
                 {listWeekdays}
             </div>
             <div className='month__days'>
-                {creatListEmptyDays(numEmptyDays)}
+                {creatListEmptyDays(props.days[0].weekday)}
                 {listDays}
             </div>
         </div>

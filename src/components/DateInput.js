@@ -5,13 +5,11 @@ import '../style/DateInput.css';
 class DateInput extends React.Component{
     constructor(props){
         super(props);
-        this.state = { value: ""};
 
-        this.handleChange = this.handleChange.bind(this);
-        
+        this.state={}
     }
 
-    handleChange(event) {
+    handleChange = (event) => {
         this.props.onDateChange(event.target.value);
     }
 
