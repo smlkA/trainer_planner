@@ -10,15 +10,20 @@ class Form extends React.Component{
 
         this.state = { dateStart: '',
                         dateEnd: '',
-                        calendar: ''};
+                        calendar: '',
+                        dateStartValid: '',
+                        dateEndValid: ''}
     }
 
-    validateEmpty = (value) => {
-        if(!value){
-            return 'empty';
-        }
+    setErrorClass = (value) => {
+        return value ? '' : 'empty';
+    }
 
-        return;
+    validateEmpty = () => {
+        this.state.dateStart ? this.setState({dateStartValid: true}) : this.setState({dateStartValid: false});
+        this.state.dateEnd ? this.setState({dateEnd: true}) : this.setState({dateStartValid: false});
+
+        return this.state.dateStart || this.state.dateEnd;
     }
 
     dateAutoFill = () => {
@@ -78,13 +83,15 @@ class Form extends React.Component{
     }
 
     handleSubmit = (event) => {
-        this.dateAutoFill();
-        
-        this.setState(prevState =>
-            ({calendar: this.getDateRange(prevState.dateStart, prevState.dateEnd)})
-        );
-        
         event.preventDefault();
+
+        if(this.validateEmpty()){
+            this.dateAutoFill();
+            
+            this.setState(prevState =>
+                ({calendar: this.getDateRange(prevState.dateStart, prevState.dateEnd)})
+            );
+        }   
     }
 
     handleChangeStart = (date) => {
@@ -109,19 +116,19 @@ class Form extends React.Component{
                         name='Start' 
                         onDateChange={this.handleChangeStart}
                         date={this.state.dateStart}
-                        class={this.validateEmpty(this.state.dateStart)} />
+                        class={this.setErrorClass(this.state.dateStartValid)} />
                     <DateInput 
                         name='End' 
                         onDateChange={this.handleChangeEnd}
                         date={this.state.dateEnd}
-                        class={this.validateEmpty(this.state.dateEnd)}/>
+                        class={this.setErrorClass(this.state.dateEndValid)}/>
                     <Submit value='Show'/>
                 </form>
                 <div className='calendar'>
                     {listMonth}
                 </div>
             </div>
-        ); 
+        )
     }
 }
 
