@@ -1,7 +1,7 @@
 import React from 'react';
-import Form from './Form';
+import InputForm from './InputForm';
 import '../style/App.css';
-import Calendar from './Calendar';
+import CalendarForm from './CalendarForm';
 
 
 class App extends React.Component {
@@ -103,20 +103,18 @@ class App extends React.Component {
     this.setState(state => ({calendar: this.getDateRange(state.dateStart, state.dateEnd)}));
   }
 
-  clickDay = (event) => { //TODO creat function for to select days
+  clickDay = (event) => { //TODO: creat function for to select days
     const selectDays = this.state.selectDays;
 
-    
     selectDays[0].push(event.target.data);
     
-
     this.setState({selectDays: selectDays});
   }
 
   render() {
     return ( 
       <div>
-        <Form dateStart={this.state.dateStart}
+        <InputForm dateStart={this.state.dateStart}
               dateEnd={this.state.dateEnd}
               handleInput={this.handleInput}
               dateAutoFill={this.dateAutoFill}
@@ -126,8 +124,8 @@ class App extends React.Component {
               validateEmpty={this.validateEmpty}
               />
 
-        {this.state.calendar ? <Calendar calendar={this.state.calendar}
-                                          click={this.clickDay}/> : ''}
+        {this.state.calendar ? <CalendarForm calendar={this.state.calendar}
+                                              click={this.clickDay}/> : ''}
         
       </div>
     );

@@ -10,9 +10,14 @@ function Calendar(props){
     }
 
     return(
-        <div className='calendar'>
-            {listMonth}
+        <div className='form'>
+            <div className='calendar'>
+                {listMonth}
+            </div>
+            <button>Generate</button>
+            <button>Clear</button>
         </div>
+        
     ); 
     
 }

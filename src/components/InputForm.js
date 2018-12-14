@@ -1,6 +1,5 @@
 import React from 'react';
 import DateInput from './DateInput';
-import Submit from './Submit';
 import '../style/Form.css';
 
 class Form extends React.Component{
@@ -35,7 +34,7 @@ class Form extends React.Component{
                     onDateChange={this.props.handleInput}
                     date={this.props.dateEnd}
                     class={this.props.dateEndValid ? '' : 'empty'}/>
-                <Submit value='Show'/>
+                <input type="submit" value='Show'/>
             </form>
         ); 
     }
