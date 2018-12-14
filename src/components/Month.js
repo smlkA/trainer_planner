@@ -14,38 +14,31 @@ const creatListEmptyDays = (num) => {
 
 function Month(props){
 
-    const listWeekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(
-        (item, i) => {
-            return(
-                <div className='weekday' key={i}>{item}</div>
-            )
-        });
-
-    const listDays = props.days.map((item, i) => {
-        let className='day';
-
-        if(item.weekend){
-            className+=' weekend'
-        }
-
-        if(item.inactive){
-            className+=' inactive'
-        }
-        
-        return(
-            <Day day={item} key={i} className={className}/>
-        )
-    });
+    const listWeekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
     return(
         <div className='month'>
             <h2 className='month__header'>{props.name}</h2>
             <div className='nameWeekDay'>
-                {listWeekdays}
+                {listWeekdays.map((item, i) => <div className='weekday' key={i}>{item}</div>)}
             </div>
             <div className='month__days'>
                 {creatListEmptyDays(props.days[0].weekday)}
-                {listDays}
+                {props.days.map((item, i) => {
+                    let className='day';
+
+                    if(item.weekend){
+                        className+=' weekend'
+                    }
+
+                    if(item.inactive){
+                        className+=' inactive'
+                    }
+                    
+                    return(
+                        <Day day={item} key={i} className={className} click={props.click}/>
+                    )
+                })}
             </div>
         </div>
     )

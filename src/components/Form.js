@@ -10,35 +10,31 @@ class Form extends React.Component{
         this.state = {  };
     }
 
-    validateEmpty = (value) => {
-        if(!value){
-            return 'empty';
-        }
-
-        return;
-    }
-
     handleSubmit = (event) => {
-        this.props.dateAutoFill();
-
-        this.props.setCalendar();
-
         event.preventDefault();
+
+        if(this.props.validateEmpty()){
+            this.props.dateAutoFill();
+
+            this.props.setCalendar();
+        }
     }
 
     render(){
         return(
             <form action='' className='form' onSubmit={this.handleSubmit}>
                 <DateInput 
-                    name='Start' 
-                    onDateChange={this.props.handleChangeStart}
+                    name='dateStart'
+                    lable='Start' 
+                    onDateChange={this.props.handleInput}
                     date={this.props.dateStart}
-                    class={this.validateEmpty(this.props.dateStart)} />
+                    class={this.props.dateStartValid ? '' : 'empty'} />
                 <DateInput 
-                    name='End' 
-                    onDateChange={this.props.handleChangeEnd}
+                    name='dateEnd'
+                    lable='End' 
+                    onDateChange={this.props.handleInput}
                     date={this.props.dateEnd}
-                    class={this.validateEmpty(this.props.dateEnd)}/>
+                    class={this.props.dateEndValid ? '' : 'empty'}/>
                 <Submit value='Show'/>
             </form>
         ); 

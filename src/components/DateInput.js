@@ -10,14 +10,15 @@ class DateInput extends React.Component{
     }
 
     handleChange = (event) => {
-        this.props.onDateChange(event.target.value);
+        this.props.onDateChange(event.target.name, event.target.value);
     }
 
     render() {
         return(
             <label className="form__lable">
-                <span className="form__text">{this.props.name}</span>
+                <span className="form__text">{this.props.lable}</span>
                 <input
+                    name={this.props.name}
                     type="date"
                     value={this.props.date}
                     onChange={this.handleChange}

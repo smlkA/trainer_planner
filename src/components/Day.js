@@ -4,7 +4,7 @@ import '../style/Day.css';
 function Day(props){
     let date = new Date(props.day.date);
     return(
-        <div className={props.className}>
+        <div className={props.className} onClick={props.click} data={props.day.weekday}>
             {date.getDate()}
         </div>
     )

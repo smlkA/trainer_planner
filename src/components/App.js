@@ -10,11 +10,33 @@ class App extends React.Component {
     this.state = {
       calendar: '',
       dateStart: '',
+      dateStartValid: true,
+      dateEndValid: true,
       dateEnd: '',
-      selectDays: '',
-      selectWeekdays: ''
+      selectDays: {
+        0: [],
+        1: []
+      }
     }
   }
+
+  validateEmpty = () => {
+    let valid = true;
+    
+    if(!this.state.dateStart) {
+        this.setState({dateStartValid: false});
+        valid = false;
+    } else {
+        this.setState({dateStartValid: true});
+    }
+     if(!this.state.dateEnd) {
+        this.setState({dateEndValid: false});
+        valid = false;
+    } else {
+        this.setState({dateEndValid: true});
+    }
+    return valid;
+}
 
   getLastDayOfMonth = (year, month) => {
     let date = new Date(year, month + 1, 0);
@@ -55,17 +77,9 @@ class App extends React.Component {
     return months;
   }
 
-  handleChangeStart = (date) => {
-    this.setState({
-        dateStart: date
-    });
+  handleInput = (name, value) => {
+    this.setState({[name]: value});
   }
-
-  handleChangeEnd = (date) => {
-      this.setState({
-          dateEnd: date
-      });
-  } 
 
   dateAutoFill = () => {
     const dateStart = new Date(this.state.dateStart);
@@ -89,18 +103,31 @@ class App extends React.Component {
     this.setState(state => ({calendar: this.getDateRange(state.dateStart, state.dateEnd)}));
   }
 
+  clickDay = (event) => { //TODO creat function for to select days
+    const selectDays = this.state.selectDays;
+
+    
+    selectDays[0].push(event.target.data);
+    
+
+    this.setState({selectDays: selectDays});
+  }
+
   render() {
     return ( 
       <div>
         <Form dateStart={this.state.dateStart}
               dateEnd={this.state.dateEnd}
-              handleChangeStart={this.handleChangeStart}
-              handleChangeEnd={this.handleChangeEnd}
+              handleInput={this.handleInput}
               dateAutoFill={this.dateAutoFill}
               setCalendar={this.setCalendar}
+              dateStartValid={this.state.dateStartValid}
+              dateEndValid={this.state.dateEndValid}
+              validateEmpty={this.validateEmpty}
               />
 
-        {this.state.calendar ? <Calendar calendar={this.state.calendar}/> : ''}
+        {this.state.calendar ? <Calendar calendar={this.state.calendar}
+                                          click={this.clickDay}/> : ''}
         
       </div>
     );
