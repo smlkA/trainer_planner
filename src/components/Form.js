@@ -11,19 +11,28 @@ class Form extends React.Component{
         this.state = { dateStart: '',
                         dateEnd: '',
                         calendar: '',
-                        dateStartValid: '',
-                        dateEndValid: ''}
-    }
-
-    setErrorClass = (value) => {
-        return value ? '' : 'empty';
+                        dateStartValid: true,
+                        dateEndValid: true}
     }
 
     validateEmpty = () => {
-        this.state.dateStart ? this.setState({dateStartValid: true}) : this.setState({dateStartValid: false});
-        this.state.dateEnd ? this.setState({dateEnd: true}) : this.setState({dateStartValid: false});
+        let valid = true;
+        
+        if(!this.state.dateStart) {
+            this.setState({dateStartValid: false});
+            valid = false;
+        } else {
+            this.setState({dateStartValid: true});
+        }
 
-        return this.state.dateStart || this.state.dateEnd;
+        if(!this.state.dateEnd) {
+            this.setState({dateEndValid: false});
+            valid = false;
+        } else {
+            this.setState({dateEndValid: true});
+        }
+
+        return valid;
     }
 
     dateAutoFill = () => {
@@ -116,12 +125,12 @@ class Form extends React.Component{
                         name='Start' 
                         onDateChange={this.handleChangeStart}
                         date={this.state.dateStart}
-                        class={this.setErrorClass(this.state.dateStartValid)} />
+                        class={this.state.dateStartValid ? '' : 'empty'} />
                     <DateInput 
                         name='End' 
                         onDateChange={this.handleChangeEnd}
                         date={this.state.dateEnd}
-                        class={this.setErrorClass(this.state.dateEndValid)}/>
+                        class={this.state.dateEndValid ? '' : 'empty'}/>
                     <Submit value='Show'/>
                 </form>
                 <div className='calendar'>
