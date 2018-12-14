@@ -16,14 +16,14 @@ class Form extends React.Component{
     }
 
     setErrorClass = (value) => {
-        return value ? '' : 'empty';
+        return value ? 'empty' : '';
     }
 
     validateEmpty = () => {
         this.state.dateStart ? this.setState({dateStartValid: true}) : this.setState({dateStartValid: false});
         this.state.dateEnd ? this.setState({dateEnd: true}) : this.setState({dateStartValid: false});
 
-        return this.state.dateStart || this.state.dateEnd;
+        return this.state.dateStartValid || this.state.dateEndValid;
     }
 
     dateAutoFill = () => {
