@@ -7,11 +7,11 @@ function Day(props){
     let date = new Date(props.day.date);
 
     let handleClick = (e) => {
-        props.click(props.day);
+        props.click(e, props.day);
     }
 
     return(
-        <div className={props.className} onClick={handleClick} data={props.day.weekday}>
+        <div className={props.className} onClick={handleClick}>
             {date.getDate()}
         </div>
     )

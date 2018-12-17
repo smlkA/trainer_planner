@@ -6,7 +6,7 @@ function Calendar(props){
     const listMonth = [];
 
     for(let key in props.calendar){
-        listMonth.push(<Month days={props.calendar[key]} name={key} key={key} click={props.click}/>);
+        listMonth.push(<Month days={props.calendar[key]} name={key} key={key} click={props.click} selectedDay={props.selectedDay}/>);
     }
 
     return(
@@ -14,8 +14,8 @@ function Calendar(props){
             <div className='calendar'>
                 {listMonth}
             </div>
-            <button>Generate</button>
-            <button>Clear</button>
+            <button onClick={props.generate}>Generate</button>
+            <button onClick={props.clear}>Clear</button>
         </div>
         
     ); 

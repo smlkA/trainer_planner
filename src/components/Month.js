@@ -1,5 +1,6 @@
 import React from 'react';
 import Day from './Day';
+import SelectedDay from './SelectedDay';
 import '../style/Month.css';
 
 const creatListEmptyDays = (num) => {
@@ -34,9 +35,11 @@ function Month(props){
                     if(item.inactive){
                         className+=' inactive'
                     }
-                    
+
                     return(
-                        <Day day={item} key={i} className={className} click={props.click}/>
+                        !!props.selectedDay && props.selectedDay.indexOf(item) !== -1 ? //TODO: display SelectedDay
+                                <SelectedDay day={item} key={i}/> :
+                                <Day day={item} key={i} className={className} click={!item.weekend && !item.inactive ? props.click : () => {}}/>
                     )
                 })}
             </div>
