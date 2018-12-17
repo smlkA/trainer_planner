@@ -103,10 +103,10 @@ class App extends React.Component {
     this.setState(state => ({calendar: this.getDateRange(state.dateStart, state.dateEnd)}));
   }
 
-  clickDay = (event) => { //TODO: creat function for to select days
+  clickDay = (value) => { //TODO: creat function for to select days
     const selectDays = this.state.selectDays;
-
-    selectDays[0].push(event.target.data);
+    
+      selectDays[0].push(value.weekday); 
     
     this.setState({selectDays: selectDays});
   }
