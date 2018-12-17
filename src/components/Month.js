@@ -37,7 +37,7 @@ function Month(props){
                     }
 
                     return(
-                        !!props.selectedDay && props.selectedDay.indexOf(item) !== -1 ? //TODO: display SelectedDay
+                        !!props.selectedDay && props.selectedDay.indexOf(item) !== -1 ?
                                 <SelectedDay day={item} key={i}/> :
                                 <Day day={item} key={i} className={className} click={!item.weekend && !item.inactive ? props.click : () => {}}/>
                     )
