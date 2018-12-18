@@ -89,7 +89,14 @@ class App extends React.Component {
   }
 
   handleInput = (name, value) => {
-    this.setState({[name]: value});
+    let selected = this.state.selected;
+    selected[0] = [];
+    selected[1] = [];
+    this.setState({[name]: value,
+                  calendar: '',
+                  selected: selected,
+                  selectedDay: ''
+                });
   }
 
   dateAutoFill = () => {
@@ -150,7 +157,9 @@ class App extends React.Component {
       })
     }
 
-    this.setState({selectedDay: arrSelectedDay})
+    if(arrSelectedDay.length !== 0){
+      this.setState({selectedDay: arrSelectedDay})
+    }
   }
 
   clear = () => {
