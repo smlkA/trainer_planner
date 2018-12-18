@@ -18,7 +18,7 @@ class App extends React.Component {
         0: [],
         1: []
       },
-      selectedDay: ''
+      selectedDays: []
     }
   }
 
@@ -47,7 +47,7 @@ class App extends React.Component {
     this.setState({[name]: value,
                   calendar: '',
                   selected: selected,
-                  selectedDay: ''
+                  selectedDays: ''
                 });
   }
 
@@ -95,22 +95,22 @@ class App extends React.Component {
     this.setState({selected: selected});
   }
 
-  setSelectedDay = () => {
-    let arrSelectedDay = [];
+  setselectedDays = () => {
+    let arrselectedDays = [];
     for(let key in this.state.calendar){
       this.state.calendar[key].forEach((item) => {
         if(!item.inactive){
           if(item.weekEven && this.state.selected[0].indexOf(item.weekday + '') !== -1){
-            arrSelectedDay.push(item);
+            arrselectedDays.push(item);
           } else if(!item.weekEven && this.state.selected[1].indexOf(item.weekday + '') !== -1){
-            arrSelectedDay.push(item);
+            arrselectedDays.push(item);
           }
         }
       })
     }
 
-    if(arrSelectedDay.length !== 0){
-      this.setState({selectedDay: arrSelectedDay})
+    if(arrselectedDays.length !== 0){
+      this.setState({selectedDays: arrselectedDays})
     }
   }
 
@@ -118,7 +118,7 @@ class App extends React.Component {
     let selected = this.state.selected;
     selected[0] = [];
     selected[1] = [];
-    this.setState({selectedDay: '', selected: selected})
+    this.setState({selectedDays: '', selected: selected})
   }
 
   render() {
@@ -137,12 +137,12 @@ class App extends React.Component {
         {this.state.calendar ? 
           <CalendarForm calendar={this.state.calendar}
                         click={this.clickDay}
-                        generate={this.setSelectedDay}
-                        selectedDay={this.state.selectedDay}
+                        generate={this.setselectedDays}
+                        selectedDays={this.state.selectedDays}
                         clear={this.clear}/> : ''}
 
-        {this.state.selectedDay ? 
-          <TableForm selectedDay={this.state.selectedDay}/> : ''}
+        {this.state.selectedDays.length !== 0 ? 
+          <TableForm selectedDays={this.state.selectedDays}/> : ''}
       </div>
     );
   }
