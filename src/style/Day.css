@@ -1,0 +1,15 @@
+
+.day{
+    width: 30px;
+    height: 25px;
+    padding-top: 5px;
+    text-align: center;
+}
+
+.weekend{
+    color: #ff7157;
+}
+
+.inactive{
+    color: #cac8c8;
+}

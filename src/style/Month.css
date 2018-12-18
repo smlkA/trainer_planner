@@ -1,0 +1,19 @@
+.month{
+    padding: 10px;
+    flex-basis: 210px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.weekday{
+    display: inline-block;
+    font-size: 13px;
+    width: 30px;
+    text-align: center;
+}
+
+.month__days{
+    display: flex;
+    flex-wrap: wrap;
+}
