@@ -81,7 +81,7 @@ class App extends React.Component {
   setSelectedDays = () => {
     let days = this.state.selectedDays;
     let selectedDays = [];
-
+    let generate = true;
     for(let key in this.state.calendar){
       this.state.calendar[key].forEach((item) => {
         days.forEach((elem) => {
@@ -92,7 +92,11 @@ class App extends React.Component {
       })
     }
 
-    this.setState({generate: true,
+    if(selectedDays.length === 0){
+      generate = false;
+    }
+
+    this.setState({generate: generate,
                     selectedDays: selectedDays});
   }
 
@@ -139,7 +143,7 @@ class App extends React.Component {
                         clear={this.clear}
                         generateValue={this.state.generate}/> : ''}
 
-        {this.state.generate ? 
+        {this.state.generate && this.state.selectedDays.length !== 0 ? 
           <TableForm selectedDays={this.state.selectedDays}
                       setLector={this.setLector}/> : ''}
       </div>
