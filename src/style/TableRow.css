@@ -1,0 +1,7 @@
+.input__author{
+    border: none;
+}
+
+.input__author:focus{
+    border: 1px solid;
+}
