@@ -2,7 +2,7 @@ import React from 'react';
 
 function CalendarButton(props){
     return(
-        props.selectedDays.length === 0 ? 
+        !props.generateValue ? 
             <button onClick={props.generate}>Generate</button> : 
             <button onClick={props.clear}>Clear</button>
     )

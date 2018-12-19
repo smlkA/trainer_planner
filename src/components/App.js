@@ -14,11 +14,8 @@ class App extends React.Component {
       dateStartValid: true,
       dateEndValid: true,
       dateEnd: '',
-      selected: {
-        0: [],
-        1: []
-      },
-      selectedDays: []
+      selectedDays: [],
+      generate: false
     }
   }
 
@@ -41,13 +38,9 @@ class App extends React.Component {
   }
 
   handleInput = (name, value) => {
-    let selected = this.state.selected;
-    selected[0] = [];
-    selected[1] = [];
     this.setState({[name]: value,
-                  calendar: '',
-                  selected: selected,
-                  selectedDays: ''
+                  calendar: [],
+                  selectedDays: []
                 });
   }
 
@@ -73,46 +66,34 @@ class App extends React.Component {
     this.setState(state => ({calendar: getDateRange(state.dateStart, state.dateEnd)}));
   }
 
-  clickDay = (e, value) => {
-    let newClassName = e.target.className.split(' ');
-
-    newClassName.indexOf('selected') === -1 ? newClassName.push('selected') : 
-      newClassName.splice(newClassName.indexOf('selected'), 1);
-
-    e.target.className = newClassName.join(' ');
-
-    const selected = this.state.selected;
-    const day = value.weekday + '';
-    if(value.typeOfWeek){
-      selected[0].indexOf(day) === -1 ? selected[0].push(day) : 
-        selected[0].splice(selected[0].indexOf(day), 1);
+  clickDay = (value) => {
+    const selectedDays = this.state.selectedDays;
+    
+    if(selectedDays.indexOf(value) === -1){
+      selectedDays.push(value);
     } else {
-      selected[1].indexOf(day) === -1 ? selected[1].push(day) : 
-        selected[1].splice(selected[0].indexOf(day), 1);
+      selectedDays.splice(selectedDays.indexOf(value), 1);
     }
     
-    
-    this.setState({selected: selected});
+    this.setState({selectedDays: selectedDays});
   }
 
   setSelectedDays = () => {
-    let arrSelectedDays = [];
+    let days = this.state.selectedDays;
+    let selectedDays = [];
+
     for(let key in this.state.calendar){
-      let month = this.state.calendar[key].slice();
-      month.forEach((item) => {
-        if(!item.inactive){
-          if(!item.typeOfWeek && this.state.selected[0].indexOf(item.weekday + '') !== -1){
-            arrSelectedDays.push(item);
-          } else if(!!item.typeOfWeek && this.state.selected[1].indexOf(item.weekday + '') !== -1){
-            arrSelectedDays.push(item);
+      this.state.calendar[key].forEach((item) => {
+        days.forEach((elem) => {
+          if(item.weekday === elem.weekday && item.typeOfWeek === elem.typeOfWeek && !item.weekend && !item.inactive){
+            selectedDays.push(item);
           }
-        }
+        })
       })
     }
 
-    if(arrSelectedDays.length !== 0){
-      this.setState({selectedDays: arrSelectedDays})
-    }
+    this.setState({generate: true,
+                    selectedDays: selectedDays});
   }
 
   clear = () => {
@@ -121,11 +102,8 @@ class App extends React.Component {
     for(let key in selectedDays){
       selectedDays[key]['author'] = '';
     }
-    
-    let selected = this.state.selected;
-    selected[0] = [];
-    selected[1] = [];
-    this.setState({selectedDays: [], selected: selected})
+    this.setState({selectedDays: [],
+                    generate: false})
   }
 
   setLector = (field, value) => {
@@ -158,9 +136,10 @@ class App extends React.Component {
                         click={this.clickDay}
                         generate={this.setSelectedDays}
                         selectedDays={this.state.selectedDays}
-                        clear={this.clear}/> : ''}
+                        clear={this.clear}
+                        generateValue={this.state.generate}/> : ''}
 
-        {this.state.selectedDays.length !== 0 ? 
+        {this.state.generate ? 
           <TableForm selectedDays={this.state.selectedDays}
                       setLector={this.setLector}/> : ''}
       </div>

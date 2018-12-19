@@ -37,11 +37,10 @@ function Month(props){
                     }
 
                     return(
-                        props.selectedDays.length !== 0 && props.selectedDays.indexOf(item) !== -1 ?
+                        props.selectedDays.indexOf(item) !== -1 ?
                                 <SelectedDay day={item} key={i}/> :
                                 <Day day={item} key={i} className={className} 
-                                    click={!item.weekend && !item.inactive && 
-                                        props.selectedDays.length === 0 ? 
+                                    click={!props.generateValue && !item.weekend && !item.inactive? 
                                         props.click : () => {}}/>
                     )
                 })}
