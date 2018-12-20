@@ -1,6 +1,6 @@
 import React from 'react';
 
-function CalendarButton(props){
+const CalendarButton = (props) => {
     return(
         !props.generateValue ? 
             <button onClick={props.generate}>Generate</button> : 

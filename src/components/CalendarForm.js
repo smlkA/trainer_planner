@@ -3,12 +3,12 @@ import Month from './Month';
 import CalendarButton from './CalendarButton';
 import '../style/Calendar.css';
 
-function Calendar(props){
+const Calendar = (props) => {
     const listMonth = [];
 
     for(let key in props.calendar){
         listMonth.push(<Month days={props.calendar[key]} name={key} key={key}
-                         click={props.click} selectedDays={props.selectedDays} 
+                         click={props.click} selectedDays={props.selectedDays}
                          generateValue={props.generateValue}/>);
     }
 
@@ -19,7 +19,6 @@ function Calendar(props){
             </div>
             <CalendarButton generateValue={props.generateValue} generate={props.generate} clear={props.clear}/>
         </div>
-        
     ); 
     
 }

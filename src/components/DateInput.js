@@ -2,7 +2,7 @@ import React from 'react';
 import '../style/DateInput.css';
 
 
-function DateInput (props){
+const DateInput = (props) => {
 
     const handleChange = (event) => {
         props.onDateChange(event.target.name, event.target.value);
@@ -20,7 +20,6 @@ function DateInput (props){
             />
         </label>
     )
-    
 }
 
 export default DateInput;

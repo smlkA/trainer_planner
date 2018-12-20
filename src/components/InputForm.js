@@ -2,10 +2,10 @@ import React from 'react';
 import DateInput from './DateInput';
 import '../style/Form.css';
 
-function InputForm (props){
+const InputForm = (props) => {
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
         if(props.validateEmpty()){
             props.dateAutoFill();
