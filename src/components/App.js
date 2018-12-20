@@ -121,10 +121,10 @@ class App extends React.Component {
   }
 
   downloadCSV = () => {
-    let csv = 'Date,Lector\n';
+    let csv = 'Date;Lector\n';
     const selectedDays = this.state.selectedDays.slice();
     selectedDays.forEach(function(item) {
-            csv += item.date + ',' + item.lector + '\n';
+            csv += item.date + ';' + item.lector + '\n';
     });
  
     console.log(csv);
