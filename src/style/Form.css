@@ -1,17 +1,7 @@
-.form{
-    padding: 20px;
-}
-
 .form__item{
     margin-bottom: 10px;
 }
 
 .form__item--error{
     color: red;
-}
-
-.calendar{
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
 }
