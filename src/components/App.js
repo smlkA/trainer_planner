@@ -79,7 +79,7 @@ class App extends React.Component {
   }
 
   setSelectedDays = () => {
-    let days = this.state.selectedDays;
+    let days = this.state.selectedDays.slice();
     let selectedDays = [];
     let generate = true;
     for(let key in this.state.calendar){
@@ -111,7 +111,7 @@ class App extends React.Component {
   }
 
   setLector = (field, value) => {
-    let selectedDays = this.state.selectedDays;
+    let selectedDays = this.state.selectedDays.slice();
 
     for(let key in selectedDays){
       if(selectedDays[key].date === field){

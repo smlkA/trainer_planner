@@ -9,7 +9,7 @@ class TableRow extends React.Component{
 
     handlerChange = (e) => {
         this.setState({author: e.target.value});
-        this.props.setLector(this.props.day.date,  document.querySelector('.input__author').value);
+        this.props.setLector(this.props.day.date,  e.target.value);
     }
 
     render(){
@@ -22,7 +22,7 @@ class TableRow extends React.Component{
                                         ' (' + date.toLocaleString("ru", {weekday: 'short'}) + ')'}</td>
                 <td className='table__data table__name'>
                     <input type='text' className='input__author' value={this.state.author}
-                             onChange={this.handlerChange} onBlur={this.handleBlur}/>
+                             onChange={this.handlerChange}/>
                 </td>
             </tr>
         ); 
