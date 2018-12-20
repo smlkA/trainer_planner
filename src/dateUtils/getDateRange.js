@@ -40,7 +40,7 @@ let getDateRange = (start, end) => {
         obj['weekday'] = (date.getDay() === 0) ? 6 : date.getDay() - 1;
         obj['weekend'] = date.getDay() === 0 || date.getDay() === 6;
         obj['inactive'] = (date >= startDate && date <= endDate) ? false : true;
-        obj['weekEven'] = getNumberWeek(date) % 2 === 0; 
+        obj['typeOfWeek'] = getNumberWeek(date) % 2 === 0 ? 0 : 1; 
         months[nameMonth].push(obj);
       }
     }

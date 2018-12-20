@@ -3,11 +3,15 @@ import '../style/Day.css';
 
 
 
-function Day(props){
+let Day = (props) => {
     let date = new Date(props.day.date);
 
-    let handleClick = (e) => {
-        props.click(e, props.day);
+    let handleClick = () => {
+        const obj ={};
+        for(let key in props.day){
+            obj[key] = props.day[key];
+        }
+        props.click(obj);
     }
 
     return(

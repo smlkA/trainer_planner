@@ -2,7 +2,7 @@ import React from 'react';
 import TableRow from './TableRow';
 import '../style/TableForm.css';
 
-function TableForm(props){
+const TableForm = (props) => {
     return(
         <table className='form table'>
          <tbody>

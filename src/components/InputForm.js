@@ -2,42 +2,36 @@ import React from 'react';
 import DateInput from './DateInput';
 import '../style/Form.css';
 
-class Form extends React.Component{
-    constructor(props) {
-        super(props);
+const InputForm = (props) => {
 
-        this.state = {  };
-    }
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
-    handleSubmit = (event) => {
-        event.preventDefault();
+        if(props.validateEmpty()){
+            props.dateAutoFill();
 
-        if(this.props.validateEmpty()){
-            this.props.dateAutoFill();
-
-            this.props.setCalendar();
+            props.setCalendar();
         }
     }
 
-    render(){
-        return(
-            <form action='' className='form' onSubmit={this.handleSubmit}>
-                <DateInput 
-                    name='dateStart'
-                    lable='Start' 
-                    onDateChange={this.props.handleInput}
-                    date={this.props.dateStart}
-                    class={this.props.dateStartValid ? '' : 'empty'} />
-                <DateInput 
-                    name='dateEnd'
-                    lable='End' 
-                    onDateChange={this.props.handleInput}
-                    date={this.props.dateEnd}
-                    class={this.props.dateEndValid ? '' : 'empty'}/>
-                <input type="submit" value='Show'/>
-            </form>
-        ); 
-    }
+    return(
+        <form action='' className='form' onSubmit={handleSubmit}>
+            <DateInput 
+                name='dateStart'
+                lable='Start' 
+                onDateChange={props.handleInput}
+                date={props.dateStart}
+                class={props.dateStartValid ? '' : 'empty'} />
+            <DateInput 
+                name='dateEnd'
+                lable='End' 
+                onDateChange={props.handleInput}
+                date={props.dateEnd}
+                class={props.dateEndValid ? '' : 'empty'}/>
+            <input type="submit" value='Show'/>
+        </form>
+    ); 
+    
 }
 
-export default Form;
+export default InputForm;

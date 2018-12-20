@@ -1,6 +1,6 @@
 import React from 'react';
 
-function TableRow(props){
+const TableRow = (props) => {
     const date = new Date(props.day.date);
     return(
         <tr className='table__row'>

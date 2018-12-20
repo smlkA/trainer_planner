@@ -14,11 +14,8 @@ class App extends React.Component {
       dateStartValid: true,
       dateEndValid: true,
       dateEnd: '',
-      selected: {
-        0: [],
-        1: []
-      },
-      selectedDays: []
+      selectedDays: [],
+      generateValue: false
     }
   }
 
@@ -41,13 +38,11 @@ class App extends React.Component {
   }
 
   handleInput = (name, value) => {
-    let selected = this.state.selected;
-    selected[0] = [];
-    selected[1] = [];
+    let validName = name + 'Valid';
     this.setState({[name]: value,
-                  calendar: '',
-                  selected: selected,
-                  selectedDays: ''
+                  calendar: [],
+                  selectedDays: [],
+                  [validName]: true
                 });
   }
 
@@ -73,52 +68,44 @@ class App extends React.Component {
     this.setState(state => ({calendar: getDateRange(state.dateStart, state.dateEnd)}));
   }
 
-  clickDay = (e, value) => {
-    let newClassName = e.target.className.split(' ');
+  clickDay = (value) => {
+    const selectedDays = this.state.selectedDays.slice();
 
-    newClassName.indexOf('selected') === -1 ? newClassName.push('selected') : 
-      newClassName.splice(newClassName.indexOf('selected'), 1);
+    const dates = selectedDays.map((item) => item.date);
 
-    e.target.className = newClassName.join(' ');
-
-    const selected = this.state.selected;
-    const day = value.weekday + '';
-    if(value.weekEven){
-      selected[0].indexOf(day) === -1 ? selected[0].push(day) : 
-        selected[0].splice(selected[0].indexOf(day), 1);
+    if(dates.indexOf(value.date) !== -1){
+      selectedDays.splice(dates.indexOf(value.date), 1);
     } else {
-      selected[1].indexOf(day) === -1 ? selected[1].push(day) : 
-        selected[1].splice(selected[0].indexOf(day), 1);
-    }
-    
-    
-    this.setState({selected: selected});
+      selectedDays.push(value);
+    }    
+
+    this.setState({selectedDays});
   }
 
-  setselectedDays = () => {
-    let arrselectedDays = [];
+  setSelectedDays = () => {
+    let days = this.state.selectedDays.slice();
+    let selectedDays = [];
+    let generateValue = true;
     for(let key in this.state.calendar){
       this.state.calendar[key].forEach((item) => {
-        if(!item.inactive){
-          if(item.weekEven && this.state.selected[0].indexOf(item.weekday + '') !== -1){
-            arrselectedDays.push(item);
-          } else if(!item.weekEven && this.state.selected[1].indexOf(item.weekday + '') !== -1){
-            arrselectedDays.push(item);
+        days.forEach((elem) => {
+          if(item.weekday === elem.weekday && item.typeOfWeek === elem.typeOfWeek && !item.weekend && !item.inactive){
+            selectedDays.push(Object.assign({}, item, {lector: ''}));
           }
-        }
+        })
       })
     }
 
-    if(arrselectedDays.length !== 0){
-      this.setState({selectedDays: arrselectedDays})
+    if(selectedDays.length === 0){
+      generateValue = false;
     }
+
+    this.setState({generateValue, selectedDays});
   }
 
   clear = () => {
-    let selected = this.state.selected;
-    selected[0] = [];
-    selected[1] = [];
-    this.setState({selectedDays: '', selected: selected})
+    this.setState({selectedDays: [],
+                    generateValue: false})
   }
 
   render() {
@@ -134,15 +121,17 @@ class App extends React.Component {
               validateEmpty={this.validateEmpty}
               />
 
-        {this.state.calendar ? 
+        {this.state.calendar.length !== 0 ? 
           <CalendarForm calendar={this.state.calendar}
                         click={this.clickDay}
-                        generate={this.setselectedDays}
+                        generate={this.setSelectedDays}
                         selectedDays={this.state.selectedDays}
-                        clear={this.clear}/> : ''}
+                        clear={this.clear}
+                        generateValue={this.state.generateValue}/> : ''}
 
-        {this.state.selectedDays.length !== 0 ? 
-          <TableForm selectedDays={this.state.selectedDays}/> : ''}
+        {this.state.generateValue && this.state.selectedDays.length !== 0 ? 
+          <TableForm selectedDays={this.state.selectedDays}
+                      setLector={this.setLector}/> : ''}
       </div>
     );
   }

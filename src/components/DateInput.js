@@ -2,31 +2,24 @@ import React from 'react';
 import '../style/DateInput.css';
 
 
-class DateInput extends React.Component{
-    constructor(props){
-        super(props);
+const DateInput = (props) => {
 
-        this.state={}
+    const handleChange = (event) => {
+        props.onDateChange(event.target.name, event.target.value);
     }
 
-    handleChange = (event) => {
-        this.props.onDateChange(event.target.name, event.target.value);
-    }
-
-    render() {
-        return(
-            <label className="form__lable">
-                <span className="form__text">{this.props.lable}</span>
-                <input
-                    name={this.props.name}
-                    type="date"
-                    value={this.props.date}
-                    onChange={this.handleChange}
-                    className={this.props.class}
-                />
-            </label>
-        )
-    }
+    return(
+        <label className="form__lable">
+            <span className="form__text">{props.lable}</span>
+            <input
+                name={props.name}
+                type="date"
+                value={props.date}
+                onChange={handleChange}
+                className={props.class}
+            />
+        </label>
+    )
 }
 
 export default DateInput;
