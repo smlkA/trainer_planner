@@ -120,6 +120,20 @@ class App extends React.Component {
     this.setState({selectedDays});
   }
 
+  downloadCSV = () => {
+    let csv = 'Date,Lector\n';
+    const selectedDays = this.state.selectedDays.slice();
+    selectedDays.forEach(function(item) {
+            csv += item.date + ',' + item.lector + '\n';
+    });
+ 
+    console.log(csv);
+    let hiddenElement = document.createElement('a');  
+    hiddenElement.href = 'data:text/csv;charset=utf-8,%EF%BB%BF' + encodeURI(csv);
+    hiddenElement.download = 'trainer_planner.csv';
+    hiddenElement.click();
+  }
+
   render() {
     return ( 
       <div>
@@ -143,7 +157,8 @@ class App extends React.Component {
 
         {this.state.generateValue && this.state.selectedDays.length !== 0 ? 
           <TableForm selectedDays={this.state.selectedDays}
-                      setLector={this.setLector}/> : ''}
+                      setLector={this.setLector}
+                      downloadCSV={this.downloadCSV}/> : ''}
       </div>
     );
   }
