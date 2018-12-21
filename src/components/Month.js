@@ -44,8 +44,8 @@ const Month = (props) => {
 
                     return(
                         <Day day={item} key={item.date} className={className} 
-                            click={!props.generateValue && !item.weekend && !item.inactive ? 
-                                    props.click : () => {}}/>
+                                toggleSelectedDay={!props.generateValue && !item.weekend && !item.inactive ? 
+                                    props.toggleSelectedDay : () => {}}/>
                     )
                 })}
             </div>

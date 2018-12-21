@@ -7,7 +7,7 @@ const InputForm = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if(props.toggleValidateEmpty()){
+        if(props.validateEmpty()){
             props.setAutoDate();
 
             props.setCalendar();

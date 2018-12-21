@@ -7,7 +7,7 @@ let Day = (props) => {
     let date = new Date(props.day.date);
 
     return(
-        <div className={props.className} onClick={props.click.bind(this, props.day)}>
+        <div className={props.className} onClick={props.toggleSelectedDay.bind(this, props.day)}>
             {date.getDate()}
         </div>
     )

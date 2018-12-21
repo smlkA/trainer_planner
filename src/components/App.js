@@ -15,11 +15,11 @@ class App extends React.Component {
       isDateEndValid: true,
       dateEnd: '',
       selectedDays: [],
-      isGenerateValue: false
+      isGenerated: false
     }
   }
 
-  toggleValidateEmpty = () => {
+  validateEmpty = () => {
     let isValid = true;
     
     if(!this.state.dateStart) {
@@ -40,7 +40,7 @@ class App extends React.Component {
   handleInput = (e) => {
     let isValidName = 'is' + e.target.name.split('')[0].toUpperCase() +
                        e.target.name.split('').splice(0, 1).join('') + 'Valid';
-                       
+
     this.setState({[e.target.name]: e.target.value,
                   calendar: [],
                   selectedDays: [],
@@ -70,7 +70,7 @@ class App extends React.Component {
     this.setState(state => ({calendar: getDateRange(state.dateStart, state.dateEnd)}));
   }
 
-  clickDay = (value) => {
+  toggleSelectedDay = (value) => {
     const selectedDays = this.state.selectedDays.slice();
 
     const dates = selectedDays.map((item) => item.date);
@@ -87,7 +87,7 @@ class App extends React.Component {
   setSelectedDays = () => {
     let days = this.state.selectedDays.slice();
     let selectedDays = [];
-    let isGenerateValue = true;
+    let isGenerated = true;
     for(let key in this.state.calendar){
       this.state.calendar[key].forEach((item) => {
         days.forEach((elem) => {
@@ -99,15 +99,15 @@ class App extends React.Component {
     }
 
     if(selectedDays.length === 0){
-      isGenerateValue = false;
+     isGenerated = false;
     }
 
-    this.setState({isGenerateValue, selectedDays});
+    this.setState({isGenerated, selectedDays});
   }
 
   clear = () => {
     this.setState({selectedDays: [],
-                    isGenerateValue: false})
+                   isGenerated: false})
   }
 
   setLector = (day, e) => {
@@ -148,17 +148,17 @@ class App extends React.Component {
               setCalendar={this.setCalendar}
               isDateStartValid={this.state.isDateStartValid}
               isDateEndValid={this.state.isDateEndValid}
-              toggleValidateEmpty={this.toggleValidateEmpty}/>
+              validateEmpty={this.validateEmpty}/>
 
         {this.state.calendar.length !== 0 && 
           <CalendarForm calendar={this.state.calendar}
-                        click={this.clickDay}
+                        toggleSelectedDay={this.toggleSelectedDay}
                         generate={this.setSelectedDays}
                         selectedDays={this.state.selectedDays}
                         clear={this.clear}
-                        isGenerateValue={this.state.isGenerateValue}/>}
+                        isGenerated={this.state.isGenerated}/>}
 
-        {this.state.isGenerateValue && this.state.selectedDays.length !== 0 && 
+        {this.state.isGenerated && this.state.selectedDays.length !== 0 && 
           <TableForm selectedDays={this.state.selectedDays}
                       setLector={this.setLector}
                       downloadCSV={this.downloadCSV}/>}

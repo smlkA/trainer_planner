@@ -8,8 +8,9 @@ const Calendar = (props) => {
 
     for(let key in props.calendar){
         listMonth.push(<Month days={props.calendar[key]} name={key} key={key}
-                         click={props.click} selectedDays={props.selectedDays}
-                         isGenerateValue={props.isGenerateValue}/>);
+                        toggleSelectedDay={props.toggleSelectedDay} 
+                        selectedDays={props.selectedDays}
+                        isGenerateValue={props.isGenerateValue}/>);
     }
 
     return(
