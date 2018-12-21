@@ -5,14 +5,14 @@ import '../style/TableForm.css';
 const TableForm = (props) => {
     return(
         <table className='form table'>
-         <tbody>
+            <tbody>
             <tr className='table__row'>
                 <td className='table__header'>Selected days: {props.selectedDays.length}</td>
             </tr>
-            {props.selectedDays.map((item, i) => <TableRow day={item} key={i}/>)}
-         </tbody>
+            {props.selectedDays.map((item, i) => <TableRow day={item} key={i} setLector={props.setLector}/>)}
+            </tbody>
         </table>
-    ); 
+    )
     
 }
 

@@ -7,7 +7,7 @@ const Month = (props) => {
 
     const listWeekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-    const creatListEmptyDays = (num) => {
+    const createListEmptyDays = (num) => {
         let arr = [];
         for(let i = 0; i < num; i++){
             arr.push(
@@ -24,7 +24,7 @@ const Month = (props) => {
                 {listWeekdays.map((item) => <div className='weekday' key={item}>{item}</div>)}
             </div>
             <div className='month__days'>
-                {creatListEmptyDays(props.days[0].weekday)}
+                {createListEmptyDays(props.days[0].weekday)}
                 {props.days.map((item) => {
                     let className='day';
 

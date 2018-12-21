@@ -9,7 +9,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      calendar: '',
+      calendar: [],
       dateStart: '',
       dateStartValid: true,
       dateEndValid: true,
@@ -106,6 +106,18 @@ class App extends React.Component {
   clear = () => {
     this.setState({selectedDays: [],
                     generateValue: false})
+  }
+
+  setLector = (day, e) => {
+    let selectedDays = this.state.selectedDays.slice();
+
+    for(let key in selectedDays){
+      if(selectedDays[key].date === day.date){
+        selectedDays[key]['lector'] = e.target.value;
+      }
+    }
+
+    this.setState({selectedDays});
   }
 
   render() {
