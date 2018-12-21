@@ -8,7 +8,7 @@ const InputForm = (props) => {
         e.preventDefault();
 
         if(props.validateEmpty()){
-            props.dateAutoFill();
+            props.setAutoDate();
 
             props.setCalendar();
         }
@@ -21,13 +21,13 @@ const InputForm = (props) => {
                 lable='Start' 
                 onDateChange={props.handleInput}
                 date={props.dateStart}
-                class={props.dateStartValid ? '' : 'empty'} />
+                class={props.isDateStartValid ? '' : 'empty'} />
             <DateInput 
                 name='dateEnd'
                 lable='End' 
                 onDateChange={props.handleInput}
                 date={props.dateEnd}
-                class={props.dateEndValid ? '' : 'empty'}/>
+                class={props.isDateEndValid ? '' : 'empty'}/>
             <input type="submit" value='Show'/>
         </form>
     ); 

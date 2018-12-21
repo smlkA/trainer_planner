@@ -3,22 +3,9 @@ import '../style/Day.css';
 
 
 
-let Day = (props) => {
-    let date = new Date(props.day.date);
-
-    let handleClick = () => {
-        const obj ={};
-        for(let key in props.day){
-            obj[key] = props.day[key];
-        }
-        props.click(obj);
-    }
-
-    return(
-        <div className={props.className} onClick={handleClick}>
-            {date.getDate()}
+let Day = (props) =>
+        <div className={props.className} onClick={props.toggleSelectedDay.bind(this, props.day)}>
+            {new Date(props.day.date).getDate()}
         </div>
-    )
-}
-
+        
 export default Day;
