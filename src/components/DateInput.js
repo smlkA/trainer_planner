@@ -2,12 +2,7 @@ import React from 'react';
 import '../style/DateInput.css';
 
 
-const DateInput = (props) => {
-
-    // const handleChange = (event) => props.onDateChange(event.target.name, event.target.value);
-    
-
-    return(
+const DateInput = (props) => 
         <label className="form__lable">
             <span className="form__text">{props.lable}</span>
             <input
@@ -18,7 +13,6 @@ const DateInput = (props) => {
                 className={props.class}
             />
         </label>
-    )
-}
+
 
 export default DateInput;

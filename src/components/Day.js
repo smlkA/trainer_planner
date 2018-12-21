@@ -3,14 +3,9 @@ import '../style/Day.css';
 
 
 
-let Day = (props) => {
-    let date = new Date(props.day.date);
-
-    return(
+let Day = (props) =>
         <div className={props.className} onClick={props.toggleSelectedDay.bind(this, props.day)}>
-            {date.getDate()}
+            {new Date(props.day.date).getDate()}
         </div>
-    )
-}
-
+        
 export default Day;
