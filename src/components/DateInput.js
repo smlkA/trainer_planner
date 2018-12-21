@@ -4,9 +4,8 @@ import '../style/DateInput.css';
 
 const DateInput = (props) => {
 
-    const handleChange = (event) => {
-        props.onDateChange(event.target.name, event.target.value);
-    }
+    // const handleChange = (event) => props.onDateChange(event.target.name, event.target.value);
+    
 
     return(
         <label className="form__lable">
@@ -15,7 +14,7 @@ const DateInput = (props) => {
                 name={props.name}
                 type="date"
                 value={props.date}
-                onChange={handleChange}
+                onChange={props.onDateChange}
                 className={props.class}
             />
         </label>
